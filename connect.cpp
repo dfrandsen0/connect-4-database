@@ -1,8 +1,22 @@
 #include <iostream>
+
+#include "utility.h"
+#include "state.h"
+#include "node.h"
+#include "mcts.h"
+
+//later passed by argv?
+#define NUM_SIMS	1
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    cout << "Hello world!" << endl;
+
+    State* startingState = Utility::makeEmptyState();
+
+    Node* root = new Node(startingState);
+
+    MCTS::startSimulation(root, NUM_SIMS);
 
     return 0;
 }

@@ -19,16 +19,24 @@ void Node::setState(State* state) {
     this->state = state;
 }
 
-int Node::getCounts() {
-    return this->counts;
+int Node::getCount() {
+    return this->count;
 }
 
-void Node::setCounts(int counts) {
-    this->counts = counts;
+void Node::incCount() {
+    this->count++;
+}
+
+void Node::setCount(int count) {
+    this->count = count;
 }
 
 int Node::getWins() {
     return this->wins;
+}
+
+void Node::incWins() {
+    this->wins++;
 }
 
 void Node::setWins(int wins) {

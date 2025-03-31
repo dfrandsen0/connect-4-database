@@ -8,7 +8,7 @@
 class Node {
 private:
     State* state = nullptr;
-    int counts = 0;
+    int count = 0;
     int wins = 0;
     Node* children[NUM_CHILDREN];
 public:
@@ -18,10 +18,12 @@ public:
     State* getState();
     void setState(State* state);
 
-    int getCounts();
-    void setCounts(int counts);
+    int getCount();
+    void incCount();
+    void setCount(int count);
 
     int getWins();
+    void incWins();
     void setWins(int wins);
 
     Node** getChildren();

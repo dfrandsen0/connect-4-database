@@ -8,7 +8,7 @@ State::State(char playerNum = 1) {
     this->playerNum = playerNum;
 }
 
-State::State(char playerNum = 1, char** state = nullptr) {
+State::State(char playerNum, char** state) {
     this->playerNum = playerNum;
     this->state = nullptr;
 }

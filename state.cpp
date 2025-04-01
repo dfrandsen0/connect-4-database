@@ -1,3 +1,4 @@
+#include <string.h>
 
 #include "config.h"
 #include "state.h"
@@ -10,7 +11,17 @@ State::State(char playerNum = 1) {
 
 State::State(char playerNum, char** state) {
     this->playerNum = playerNum;
-    this->state = nullptr;
+    this->state = state;
+
+    this->available = new bool[NUM_COLUMNS];
+
+    for(int i = 0; i < NUM_COLUMNS; i++) {
+	if(state[i][NUM_ROWS - 1] == 0) {
+	    this->available[i] = true;
+	} else {
+	    this->available[i] = false;
+	}
+    }
 }
 
 char State::getPlayerNum() {
@@ -41,4 +52,12 @@ char** State::copyState() {
 
     return newState;
 
+}
+
+bool* State::getAvailable() {
+    return this->available;
+}
+
+void State::setAvailable(bool* newAva) {
+    this->available = newAva;
 }

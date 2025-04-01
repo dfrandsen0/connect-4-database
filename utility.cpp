@@ -1,7 +1,12 @@
+#include <iostream>
+#include <math.h>
 
 #include "utility.h"
 #include "state.h"
 #include "config.h"
+#include "node.h"
+
+using namespace std;
 
 State* Utility::makeEmptyState() {
     char** newState = new char*[NUM_COLUMNS];
@@ -15,4 +20,8 @@ State* Utility::makeEmptyState() {
 
     State* result = new State(1, newState);
     return result;
+}
+
+double Utility::calcUcb(Node* node, double lnParentCount) {
+    return ((double)node->getWins() / (double)node->getCount()) + C_VALUE * sqrt(lnParentCount / (double)node->getCount());
 }

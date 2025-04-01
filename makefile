@@ -1,7 +1,7 @@
-all: clean connect
+all: connect
 
-connect: connect.cpp state.cpp node.cpp
-	g++ -g -Wall -o connect connect.cpp node.cpp state.cpp utility.cpp mcts.cpp
+connect: connect.cpp mcts.cpp play.cpp
+	g++ -g -Wall -o connect connect.cpp node.cpp state.cpp utility.cpp mcts.cpp play.cpp -lm
 
 clean:
 	rm -f connect

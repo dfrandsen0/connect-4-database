@@ -47,3 +47,11 @@ void Node::setWins(int wins) {
 Node** Node::getChildren() {
     return this->children;
 }
+
+Node* Node::getChild(int index) {
+    return this->children[index];
+}
+
+void Node::setChild(Node* child, int index) {
+    this->children[index] = child;
+}

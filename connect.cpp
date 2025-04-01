@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 #include "utility.h"
 #include "state.h"
@@ -6,7 +7,7 @@
 #include "mcts.h"
 
 //later passed by argv?
-#define NUM_SIMS	1
+#define NUM_SIMS	100
 
 using namespace std;
 

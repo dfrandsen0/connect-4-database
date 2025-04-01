@@ -5,6 +5,7 @@ class State {
 private:
     char playerNum = 1;
     char** state = nullptr;
+    bool* available = nullptr;
 public:
     State();
     State(char playerNum);
@@ -17,6 +18,10 @@ public:
     void setState(char** state);
 
     char** copyState();
+
+    bool* getAvailable();
+    void setAvailable(bool* newAva);
+
 };
 
 #endif

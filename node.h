@@ -27,7 +27,8 @@ public:
     void setWins(int wins);
 
     Node** getChildren();
+    Node* getChild(int index);
+    void setChild(Node* child, int index);
 };
-
 
 #endif

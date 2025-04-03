@@ -6,27 +6,64 @@
 #include "node.h"
 #include "mcts.h"
 #include "play.h"
+#include "human.h"
+#include "ai.h"
 
 //later passed by argv?
 #define NUM_SIMS	1000000
+
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 
-    State* startingState = Utility::makeEmptyState();
-    Node* root = new Node(startingState);
+    AIBot* aiPlayer = new AIBot(1);
+    Human* humanPlayer = new Human(2);
 
-//    Utility::waitForInput();
+    aiPlayer->startGame();
+    humanPlayer->startGame();
 
-    MCTS::startSimulation(root, NUM_SIMS);
+    //[choose who goes first here]
 
-    cout << root->getCount() << " " << root->getWins() << endl;
+    Player* currPlayer = aiPlayer;
+    Player* waitingPlayer = humanPlayer;
+    Player* temp;
 
-    Node** children = root->getChildren();
-    double lnParentCount = log(root->getCount());
-    for(int i = 0; i < NUM_CHILDREN; i++) {
-	cout << i << ": " << children[i]->getCount() << " " << children[i]->getWins() << "; " << Utility::calcUcb(children[i], lnParentCount) << endl;
+    State* baseState = Utility::makeEmptyState();
+
+    int move;
+    for(;;) {
+	move = currPlayer->takeTurn();
+
+	if(!Play::makeMove(baseState->getState(), move, baseState->getPlayerNum())) {
+	    cout << "Failed to play " << move << endl;
+	    return 1;
+	}
+
+	if(currPlayer->getPlayerType() == PlayerType::AI) {
+	    cout << "The AI played in column " << move << "." << endl;
+	}
+
+	if(Play::checkWin(baseState->getState(), baseState->getPlayerNum())) {
+	    if(currPlayer->getPlayerType() == PlayerType::AI) {
+		cout << "The AI beat you!" << endl;
+	    } else {
+		cout << "You beat the AI!" << endl;
+	    }
+	    break;
+	}
+
+	if(Play::checkDraw(baseState->getState())) {
+	    cout << "It's a draw!" << endl;
+	    break;
+	}
+
+	waitingPlayer->informEnemyTurn(move);
+
+	baseState->setPlayerNum(Play::flipTurn(baseState->getPlayerNum()));
+	temp = currPlayer;
+	currPlayer = waitingPlayer;
+	waitingPlayer = temp;
     }
 
     return 0;

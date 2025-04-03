@@ -1,6 +1,7 @@
 #include "play.h"
 #include "config.h"
 
+
 char Play::flipTurn(char turn) {
     if(turn == 1) {
 	return 2;
@@ -81,4 +82,24 @@ bool Play::checkWin(char** state, char player) {
     }
 
     return false;
+}
+
+bool Play::makeMove(char** state, int move, char turn) {
+    for(int i = 0; i < NUM_ROWS; i++) {
+	if(state[move][i] == 0) {
+	    state[move][i] = turn;
+	    return true;
+	}
+    }
+    return false;
+}
+
+bool Play::checkDraw(char** state) {
+    for(int i = 0; i < NUM_COLUMNS; i++) {
+	if(state[i][NUM_ROWS - 1] == 0) {
+	    return false;
+	}
+    }
+
+    return true;
 }

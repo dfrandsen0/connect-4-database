@@ -19,4 +19,9 @@ enum NodeFinished {
   LOSE
 };
 
+enum PlayerType {
+  HUMAN,
+  AI
+};
+
 #endif

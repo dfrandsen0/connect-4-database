@@ -6,9 +6,9 @@
 
 class AIBot : public Player {
 public:
-    AIBot(char playerNum) : Player(playerNum) {};
+    AIBot(char playerNum) : Player(PlayerType::AI, playerNum) {}
 
-    void startGame(char yourPlayer) override;
+    void startGame() override;
     int takeTurn() override;
     void informEnemyTurn(int move) override;
     void endGame() override;

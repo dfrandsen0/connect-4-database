@@ -3,15 +3,17 @@
 
 #include "player.h"
 
-
 class Human : public Player {
 public:
-    Human(char playerNum) : Player(playerNum) {};
+    Human(char playerNum) : Player(PlayerType::HUMAN, playerNum) {}
 
-    void startGame(char yourPlayer) override;
+    void startGame() override;
     int takeTurn() override;
     void informEnemyTurn(int move) override;
     void endGame() override;
+
+private:
+    void printState();
 };
 
 #endif

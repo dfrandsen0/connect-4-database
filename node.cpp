@@ -43,6 +43,13 @@ void Node::setWins(int wins) {
     this->wins = wins;
 }
 
+enum NodeFinished Node::getFinished() {
+    return this->finished;
+}
+
+void Node::setFinished(enum NodeFinished finished) {
+    this->finished = finished;
+}
 
 Node** Node::getChildren() {
     return this->children;

@@ -10,6 +10,7 @@ private:
     State* state = nullptr;
     int count = 0;
     int wins = 0;
+    enum NodeFinished finished = UNFINISHED;
     Node* children[NUM_CHILDREN];
 public:
     Node();
@@ -25,6 +26,9 @@ public:
     int getWins();
     void incWins();
     void setWins(int wins);
+
+    enum NodeFinished getFinished();
+    void setFinished(enum NodeFinished finished);
 
     Node** getChildren();
     Node* getChild(int index);

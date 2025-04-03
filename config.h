@@ -5,8 +5,17 @@
 #define NUM_CHILDREN	7
 #define NUM_COLUMNS	7
 #define NUM_ROWS	6
+#define WIN_LENGTH	4
+#define MIDDLE_ROW	3
+#define MIDDLE_COLUMN	3
 
 // MCTS Constants
 #define C_VALUE		1.414213562
+
+enum NodeFinished {
+  UNFINISHED,
+  WIN,
+  LOSE
+};
 
 #endif

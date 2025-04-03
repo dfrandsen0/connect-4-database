@@ -61,3 +61,4 @@ bool* State::getAvailable() {
 void State::setAvailable(bool* newAva) {
     this->available = newAva;
 }
+

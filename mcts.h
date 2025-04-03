@@ -5,9 +5,9 @@
 
 class MCTS {
 private:
-    static bool select(Node* root);
-    static Node* expand(State* parentState, int move);
-    static bool simulate(char** state, int move);
+    static bool select(Node* root, int playerNum);
+    static Node* expand(State* parentState, int move, int playerNum);
+    static bool simulate(State* parentState, int move, int playerNum);
 public:
     static void startSimulation(Node* root, int numSims);
 };

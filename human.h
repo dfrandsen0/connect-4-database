@@ -2,8 +2,11 @@
 #define HUMAN_H_
 
 #include "player.h"
+#include "state.h"
 
 class Human : public Player {
+private:
+    State* internalState;
 public:
     Human(char playerNum) : Player(PlayerType::HUMAN, playerNum) {}
 

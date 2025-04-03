@@ -2,13 +2,11 @@
 #define PLAYER_H_
 
 #include "config.h"
-#include "state.h"
 
 class Player {
 protected:
     enum PlayerType playerType;// = PlayerT
     char playerNum_ = 1;
-    State* internalState;
 public:
     Player(enum PlayerType type, char playerNum) : playerType(type), playerNum_(playerNum) {}
     virtual ~Player();

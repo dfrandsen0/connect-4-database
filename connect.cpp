@@ -9,10 +9,6 @@
 #include "human.h"
 #include "ai.h"
 
-//later passed by argv?
-#define NUM_SIMS	1000000
-
-
 using namespace std;
 
 int main(int argc, char* argv[]) {

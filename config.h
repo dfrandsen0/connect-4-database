@@ -10,7 +10,8 @@
 #define MIDDLE_COLUMN	3
 
 // MCTS Constants
-#define C_VALUE		1.414213562
+//#define C_VALUE		1.414213562
+#define C_VALUE		20
 
 enum NodeFinished {
   UNFINISHED,

@@ -8,25 +8,26 @@
 #include "play.h"
 
 //later passed by argv?
-#define NUM_SIMS	1000000
+#define NUM_SIMS	100
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 
     State* startingState = Utility::makeEmptyState();
-
     Node* root = new Node(startingState);
+
+    Utility::waitForInput();
 
     MCTS::startSimulation(root, NUM_SIMS);
 
-    cout << root->getCount() << " " << root->getWins() << endl;
+//    out << root->getCount() << " " << root->getWins() << endl;
 
-    Node** children = root->getChildren();
-    double lnParentCount = log(root->getCount());
-    for(int i = 0; i < NUM_CHILDREN; i++) {
-	cout << i << ": " << children[i]->getCount() << " " << children[i]->getWins() << "; " << Utility::calcUcb(children[i], lnParentCount) << endl;
-    }
+//    Node** children = root->getChildren();
+//    double lnParentCount = log(root->getCount());
+//    for(int i = 0; i < NUM_CHILDREN; i++) {
+//	cout << i << ": " << children[i]->getCount() << " " << children[i]->getWins() << "; " << Utility::calcUcb(children[i], lnParentCount) << endl;
+//    }
 
     return 0;
 }

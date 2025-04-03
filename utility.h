@@ -8,6 +8,7 @@ class Utility {
 public:
     static State* makeEmptyState();
     static double calcUcb(Node* node, double lnParentCount);
+    static void waitForInput();
 };
 
 #endif

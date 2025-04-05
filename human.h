@@ -9,6 +9,7 @@ private:
     State* internalState;
 public:
     Human(char playerNum) : Player(PlayerType::HUMAN, playerNum) {}
+    Human(char playerNum, double cValue, int numSims) : Player(PlayerType::HUMAN, playerNum, cValue, numSims) {}
 
     void startGame() override;
     int takeTurn() override;

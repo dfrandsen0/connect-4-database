@@ -1,7 +1,10 @@
+#include <iostream>
 #include <string.h>
 
 #include "config.h"
 #include "state.h"
+
+using namespace std;
 
 State::State() {}
 
@@ -45,13 +48,13 @@ char** State::copyState() {
 
     for(int i = 0; i < NUM_COLUMNS; i++) {
 	newState[i] = new char[NUM_ROWS];
+
 	for(int j = 0; j < NUM_ROWS; j++) {
 	    newState[i][j] = this->state[i][j];
 	}
     }
 
     return newState;
-
 }
 
 bool* State::getAvailable() {

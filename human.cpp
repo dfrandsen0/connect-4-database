@@ -41,11 +41,5 @@ void Human::endGame() {
 }
 
 void Human::printState() {
-    char** state = this->internalState->getState();
-    for(int i = NUM_ROWS - 1; i >= 0; i--) {
-	for(int j = 0; j < NUM_COLUMNS; j++) {
-	    std::cout << (int)state[j][i];
-	}
-	std::cout << std::endl;
-    }
+    Utility::printState(this->internalState->getState());
 }

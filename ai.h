@@ -11,6 +11,7 @@ private:
     Node* currPosition;
 public:
     AIBot(char playerNum) : Player(PlayerType::AI, playerNum) {}
+    AIBot(char playerNum, double cValue, int numSims) : Player(PlayerType::AI, playerNum, cValue, numSims) {}
 
     void startGame() override;
     int takeTurn() override;

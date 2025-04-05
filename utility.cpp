@@ -24,8 +24,8 @@ State* Utility::makeEmptyState() {
     return result;
 }
 
-double Utility::calcUcb(Node* node, double lnParentCount) {
-    return ((double)node->getWins() / (double)node->getCount()) + C_VALUE * sqrt(lnParentCount / (double)node->getCount());
+double Utility::calcUcb(Node* node, double lnParentCount, double cValue) {
+    return ((double)node->getWins() / (double)node->getCount()) + cValue * sqrt(lnParentCount / (double)node->getCount());
 }
 
 void Utility::waitForInput() {
@@ -37,4 +37,20 @@ void Utility::waitForInput() {
     while(read(0, &temp, 1) > 0) {}
 
     fcntl(0, F_SETFL, fcntl(0, F_GETFL, 0) & ~O_NONBLOCK);
+}
+
+void Utility::printState(char** state) {
+    for(int i = NUM_ROWS - 1; i >= 0; i--) {
+        cout << "|";
+        for(int j = 0; j < NUM_COLUMNS; j++) {
+            if(state[j][i] != 0) {
+                cout << (int)state[j][i];
+            } else {
+                cout << " ";
+            }
+        }
+        cout << "|" << endl;
+    }
+
+    cout << "---------" << endl;
 }

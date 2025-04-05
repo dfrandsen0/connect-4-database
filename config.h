@@ -10,9 +10,8 @@
 #define MIDDLE_COLUMN	3
 
 // MCTS Constants
-//#define C_VALUE		1.414213562
-#define C_VALUE		20
-#define NUM_SIMS	1000000
+#define DEFAULT_C_VALUE		1.414213562
+#define DEFAULT_NUM_SIMS	1000
 
 enum NodeFinished {
   UNFINISHED,

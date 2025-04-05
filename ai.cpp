@@ -19,8 +19,8 @@ void AIBot::startGame() {
 }
 
 int AIBot::takeTurn() {
-    cout << "AI is thinking..." << endl;
-    MCTS::startSimulation(this->currPosition, NUM_SIMS);
+//    cout << "AI is thinking..." << endl;
+    MCTS::startSimulation(this->currPosition, this->numSims, this->cValue);
 
     int nextMove = findBestMove();
 
@@ -36,17 +36,17 @@ int AIBot::findBestMove() {
     int maxCount = 0;
     int maxIndex = -1;
     int defaultIndex = -1;
-
+/*
     for(int i = 0; i < NUM_CHILDREN; i++) {
 	if(available[i]) {
 	    cout << kids[i]->getFinished() << ": ";
-	    double temp = Utility::calcUcb(kids[i], log(this->currPosition->getCount()));
+	    double temp = Utility::calcUcb(kids[i], log(this->currPosition->getCount()), this->cValue);
 	    cout << kids[i]->getCount() << ", " << kids[i]->getWins() << ": " << temp << endl;
 	} else {
 	    cout << "unavailable" << endl;
 	}
     }
-
+*/
     for(int i = 0; i < NUM_CHILDREN; i++) {
 	if(available[i]) {
 	    if(kids[i]->getFinished() == NodeFinished::WIN) {
@@ -62,7 +62,7 @@ int AIBot::findBestMove() {
 	}
     }
 
-    cout << "maxIndex: " << maxIndex << "; maxCount: " << maxCount << " default: " << defaultIndex << endl;
+  //  cout << "maxIndex: " << maxIndex << "; maxCount: " << maxCount << " default: " << defaultIndex << endl;
 
     if(maxIndex == -1) {
 	return defaultIndex;
@@ -72,7 +72,22 @@ int AIBot::findBestMove() {
 }
 
 void AIBot::makeMove(int move) {
-    this->currPosition = this->currPosition->getChildren()[move];
+    if(this->currPosition->getChildren()[move] == nullptr) {
+
+	char nextPlayer = 1;
+	if(this->currPosition->getState()->getPlayerNum() == 1) {
+	    nextPlayer = 2;
+	}
+
+	char** newStateArray = this->currPosition->getState()->copyState();
+	Play::makeMove(newStateArray, move, this->currPosition->getState()->getPlayerNum());
+
+	State* newState = new State(nextPlayer, newStateArray);
+	Node* newNode = new Node(newState);
+	this->currPosition->setChild(newNode, move);
+    }
+
+    this->currPosition = this->currPosition->getChild(move);
 }
 
 void AIBot::informEnemyTurn(int move) {

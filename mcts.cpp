@@ -11,16 +11,19 @@
 
 using namespace std;
 
-void MCTS::startSimulation(Node* root, int numSims) {
+void printState(char** state);
+
+void MCTS::startSimulation(Node* root, int numSims, double cValue) {
     for(int i = 0; i < numSims; i++) {
-	MCTS::select(root, root->getState()->getPlayerNum());
+	MCTS::select(root, root->getState()->getPlayerNum(), cValue);
     }
 }
 
 // how to handle getting to the end of the tree?
-bool MCTS::select(Node* root, int playerNum) {
+bool MCTS::select(Node* root, int playerNum, double cValue) {
     Node** rootKids = root->getChildren();
     bool* available = root->getState()->getAvailable();
+
 
     if(root->getFinished() != NodeFinished::UNFINISHED) {
 	root->incCount();
@@ -62,7 +65,7 @@ bool MCTS::select(Node* root, int playerNum) {
 
     for(int i = 0; i < NUM_CHILDREN; i++) {
 	if(available[i]) {
-	    temp = Utility::calcUcb(rootKids[i], lnParentCount);
+	    temp = Utility::calcUcb(rootKids[i], lnParentCount, cValue);
 	    if(temp > maxValue) {
 		maxValue = temp;
 		index = i;
@@ -71,7 +74,7 @@ bool MCTS::select(Node* root, int playerNum) {
     }
 
 
-    if(MCTS::select(rootKids[index], playerNum)) {
+    if(MCTS::select(rootKids[index], playerNum, cValue)) {
 	root->incCount();
 	root->incWins();
 	return true;
@@ -132,6 +135,7 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
     }
 
     int spots[NUM_COLUMNS];
+    fill(spots, spots + NUM_COLUMNS, -1);
     int s = 0;
 
     int allSpots = 0;
@@ -165,6 +169,15 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 	    if(!allSpots) {
 		return false;
 	    }
+
+	    //patch?
+	    for(int i = 0; i <= allSpots; i++) {
+		if(spots[i] == move) {
+		    spots[i] = spots[allSpots];
+		    spots[allSpots] = -1;
+		    break;
+		}
+	    }
 	}
 
 	// flip turn
@@ -173,7 +186,14 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 	//decide move
 	move = spots[(rand() % allSpots)];
     }
-
 }
 
+//void printState(char** state) {
+//    for(int i = NUM_ROWS - 1; i >= 0; i--) {
+//        for(int j = 0; j < NUM_COLUMNS; j++) {
+//            cout << (int)state[j][i];
+//        }
+//        cout << endl;
+//    }
+//}
 

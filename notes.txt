@@ -1,2 +1,0 @@
-
-make move in ai.h correct for both teams?

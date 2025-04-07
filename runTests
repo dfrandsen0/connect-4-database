@@ -2,5 +2,5 @@ rm -f results.txt
 
 for i in $(seq 1 $1)
 do
-  ./connect 0 1.70 30000 1.5 30000
+  ./connect 0 40 500000 25 100000
 done

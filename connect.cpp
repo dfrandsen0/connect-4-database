@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
         chrono::duration_cast<chrono::nanoseconds>(now.time_since_epoch()).count()
     );
     srand(seed);
-//    cout << "seed: " << seed << endl;
 
     Player* firstPlayer;
     Player* secondPlayer;
@@ -74,7 +73,7 @@ int main(int argc, char* argv[]) {
 	    }
 
 	    ofstream res;
-	    res.open("results.txt", ios::app);
+	    res.open("tools/results.txt", ios::app);
 	    res << (int)currPlayer->getPlayerNum();
 	    res.close();
 
@@ -101,7 +100,7 @@ int main(int argc, char* argv[]) {
 
 	if(waitOnBots) {
 	    Utility::printState(baseState->getState());
-	    Utility::waitForInput();
+	    // Utility::waitForInput();
 	}
     }
 

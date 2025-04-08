@@ -13,12 +13,11 @@
 #include "ai.h"
 
 using namespace std;
-//using namespace std::chrono;
 
 int main(int argc, char* argv[]) {
-    auto now = std::chrono::high_resolution_clock::now();
+    auto now = chrono::high_resolution_clock::now();
     auto seed = static_cast<unsigned int>(
-        std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count()
+        chrono::duration_cast<chrono::nanoseconds>(now.time_since_epoch()).count()
     );
     srand(seed);
 //    cout << "seed: " << seed << endl;
@@ -34,7 +33,6 @@ int main(int argc, char* argv[]) {
     if(argc == 4) {
 	firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
 	secondPlayer = new Human(2);
-//	secondPlayer = new AIBot(2, 1.414213562, 1000);
     } else if(argc == 6) {
 	firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
 	secondPlayer = new AIBot(2, atol(argv[4]), atoi(argv[5]));
@@ -43,11 +41,6 @@ int main(int argc, char* argv[]) {
 	firstPlayer = new AIBot(1);
 	secondPlayer = new Human(2);
     }
-//    Player* firstPlayer = new Human(1);
-//    Player* secondPlayer = new AIBot(2);
-//    Player* firstPlayer = new AIBot(1);
-//    Player* secondPlayer = new AIBot(2);
-
 
     firstPlayer->startGame();
     secondPlayer->startGame();
@@ -117,4 +110,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-

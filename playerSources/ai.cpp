@@ -35,7 +35,8 @@ int AIBot::findBestMove() {
 
     int maxCount = 0;
     int maxIndex = -1;
-    int defaultIndex = -1;
+    int drawIndex = -1;
+    int loseIndex = -1;
 /*
     for(int i = 0; i < NUM_CHILDREN; i++) {
 	if(available[i]) {
@@ -51,8 +52,10 @@ int AIBot::findBestMove() {
 	if(available[i]) {
 	    if(kids[i]->getFinished() == NodeFinished::WIN) {
 		return i;
+	    } else if(kids[i]->getFinished() == NodeFinished::DRAW) {
+		drawIndex = i;
 	    } else if(kids[i]->getFinished() == NodeFinished::LOSE) {
-		defaultIndex = i;
+		loseIndex = i;
 	    } else {
 		if(kids[i]->getCount() > maxCount) {
 		    maxCount = kids[i]->getCount();
@@ -62,10 +65,14 @@ int AIBot::findBestMove() {
 	}
     }
 
-  //  cout << "maxIndex: " << maxIndex << "; maxCount: " << maxCount << " default: " << defaultIndex << endl;
+//    cout << "maxIndex: " << maxIndex << "; maxCount: " << maxCount << " lose: " << loseIndex << endl;//"; drawIndex: " << drawIndex << endl;
 
     if(maxIndex == -1) {
-	return defaultIndex;
+	if(drawIndex == -1) {
+	    return loseIndex;
+	} else {
+	    return drawIndex;
+	}
     } else {
 	return maxIndex;
     }

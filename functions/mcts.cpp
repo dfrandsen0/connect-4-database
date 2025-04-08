@@ -24,14 +24,14 @@ bool MCTS::select(Node* root, int playerNum, double cValue) {
     Node** rootKids = root->getChildren();
     bool* available = root->getState()->getAvailable();
 
-
     if(root->getFinished() != NodeFinished::UNFINISHED) {
 	root->incCount();
 	if(root->getFinished() == NodeFinished::WIN) {
 	    root->incWins();
 	    return true;
 	} else {
-	    root->incWins();
+	    //TODO : ADD DRAW
+//	    root->incWins();
 	    return false;
 	}
     }

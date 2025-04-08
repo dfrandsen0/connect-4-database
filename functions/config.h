@@ -16,7 +16,8 @@
 enum NodeFinished {
   UNFINISHED,
   WIN,
-  LOSE
+  LOSE,
+  DRAW
 };
 
 enum PlayerType {

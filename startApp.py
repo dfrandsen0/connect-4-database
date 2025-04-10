@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-import time, random
+import random, subprocess
 
 ROWS = 6
 COLS = 7
@@ -19,10 +19,10 @@ class ConnectFour:
 
     def start(self):
         self.canvas = tk.Canvas(self.root, width=COLS * CELL_SIZE, height=ROWS * CELL_SIZE)
-        self.canvas.pack()
+        # self.canvas.pack()
 
         self.thinking_text = tk.Label(self.root, text="")
-        self.thinking_text.pack()
+        # self.thinking_text.pack()
 
         self.play_button = tk.Button(self.root, text="Play Game", command=self.play_game)
         self.play_button.pack(pady=10)
@@ -30,19 +30,35 @@ class ConnectFour:
         self.quit_button = tk.Button(self.root, text="Quit", command=self.quit_game)
         self.quit_button.pack(pady=10)
 
+        self.reset_button = tk.Button(self.root, text="Restart", command=self.reset_game)
+
+        self.canvas.pack()
+
     def play_game(self):
         self.canvas.config(bg="blue")
         self.play_button.forget()
 
+        self.quit_button.forget()
+        self.canvas.pack()
+        self.thinking_text.pack(pady=10)
+        self.quit_button.pack(pady=5)
+
         self.board = [[None for _ in range(COLS)] for _ in range(ROWS)]
         self.turn = "red"
 
-        #TODO
-        # start backend
+        self.start_backend()
 
         self.draw_board()
-
         self.ai_turn()
+
+    def start_backend(self):
+        self.backend = subprocess.Popen(
+            ['connect.exe', '0', '1.7', '50000'],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            text=True
+        )
+        
 
     def quit_game(self):
         self.root.destroy()
@@ -61,21 +77,39 @@ class ConnectFour:
 
     def handle_click(self, event):
         col = event.x // CELL_SIZE
-        self.make_mark(col)
         self.canvas.unbind("<Button-1>")
-        self.ai_turn()
+        packet = str(col) + ' '
+        self.backend.stdin.write(packet)
+        self.backend.stdin.flush()
+        if self.make_mark(col):
+            self.ai_turn()
 
-    def make_mark(self, col):
+    def make_mark(self, col) -> bool:
         row = self.get_available_row(col)
         if row is not None:
             self.board[row][col] = self.turn
             self.draw_board()
-            #TODO
             if self.check_win(row, col):
-                messagebox.showinfo("Game Over", f"{self.turn.capitalize()} wins!")
-                self.canvas.unbind("<Button-1>")
+                self.end_game()
+                return False
             else:
                 self.turn = "yellow" if self.turn == "red" else "red"
+                return True
+
+    def end_game(self):
+        self.canvas.unbind("<Button-1>")
+
+        if(self.turn == "red"):
+            self.thinking_text.config(text="The AI beat you!")
+        else:
+            self.thinking_text.config(text="You beat the AI!")
+        
+        self.play_button.forget()
+        self.quit_button.forget()
+        self.reset_button.pack(pady=10)
+        self.quit_button.pack(pady=10)
+
+        self.backend.wait()
 
     def get_available_row(self, col):
         for row in reversed(range(ROWS)):
@@ -105,8 +139,8 @@ class ConnectFour:
         self.board = [[None for _ in range(COLS)] for _ in range(ROWS)]
         self.turn = "red"
         self.draw_board()
-        #TODO modify this
-        self.canvas.bind("<Button-1>", self.handle_click)
+        self.start_backend()
+        self.ai_turn()
 
     def player_turn(self):
         self.thinking_text.config(text=self.player_text)
@@ -117,23 +151,11 @@ class ConnectFour:
         self.thinking_text.config(text=self.ai_text)
         self.root.update()
 
-        #TODO
-        # Reach out to backend for guess
-        col = random.randint(0, 6)
+        col = self.backend.stdout.read(1)
+        col = ord(col) - ord('0')
 
-        # Mark guess
-        self.make_mark(col)
-        self.player_turn()
-
-
-    #TODO
-    def end_game(self):
-        pass
-
-
-
-
-        
+        if self.make_mark(col):
+            self.player_turn()       
 
 if __name__ == "__main__":
     root = tk.Tk()

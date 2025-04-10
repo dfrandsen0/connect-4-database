@@ -22,7 +22,8 @@ enum NodeFinished {
 
 enum PlayerType {
   HUMAN,
-  AI
+  AI,
+  GUI
 };
 
 #endif

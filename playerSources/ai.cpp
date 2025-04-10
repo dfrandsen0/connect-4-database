@@ -19,10 +19,11 @@ void AIBot::startGame() {
 }
 
 int AIBot::takeTurn() {
-//    cout << "AI is thinking..." << endl;
+//    cerr << "AI is thinking..." << endl;
     MCTS::startSimulation(this->currPosition, this->numSims, this->cValue);
 
     int nextMove = findBestMove();
+	cout << nextMove;
 
     makeMove(nextMove);
 
@@ -40,11 +41,11 @@ int AIBot::findBestMove() {
 /*
     for(int i = 0; i < NUM_CHILDREN; i++) {
 	if(available[i]) {
-	    cout << kids[i]->getFinished() << ": ";
+	    cerr << kids[i]->getFinished() << ": ";
 	    double temp = Utility::calcUcb(kids[i], log(this->currPosition->getCount()), this->cValue);
-	    cout << kids[i]->getCount() << ", " << kids[i]->getWins() << ": " << temp << endl;
+	    cerr << kids[i]->getCount() << ", " << kids[i]->getWins() << ": " << temp << endl;
 	} else {
-	    cout << "unavailable" << endl;
+	    cerr << "unavailable" << endl;
 	}
     }
 */
@@ -65,7 +66,7 @@ int AIBot::findBestMove() {
 	}
     }
 
-//    cout << "maxIndex: " << maxIndex << "; maxCount: " << maxCount << " lose: " << loseIndex << endl;//"; drawIndex: " << drawIndex << endl;
+//    cerr << "maxIndex: " << maxIndex << "; maxCount: " << maxCount << " lose: " << loseIndex << endl;//"; drawIndex: " << drawIndex << endl;
 
     if(maxIndex == -1) {
 	if(drawIndex == -1) {

@@ -11,6 +11,7 @@
 #include "play.h"
 #include "human.h"
 #include "ai.h"
+#include "guiPlayer.h"
 
 using namespace std;
 
@@ -26,19 +27,19 @@ int main(int argc, char* argv[]) {
 
     bool waitOnBots = false;
     if(argc > 1) {
-	waitOnBots = atoi(argv[1]);
+		waitOnBots = atoi(argv[1]);
     }
 
     if(argc == 4) {
-	firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
-	secondPlayer = new Human(2);
+		firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
+		secondPlayer = new GuiPlayer(2);
     } else if(argc == 6) {
-	firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
-	secondPlayer = new AIBot(2, atol(argv[4]), atoi(argv[5]));
+		firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
+		secondPlayer = new AIBot(2, atol(argv[4]), atoi(argv[5]));
     } else {
-	waitOnBots = false;
-	firstPlayer = new AIBot(1);
-	secondPlayer = new Human(2);
+		waitOnBots = false;
+		firstPlayer = new AIBot(1);
+		secondPlayer = new Human(2);
     }
 
     firstPlayer->startGame();
@@ -54,58 +55,56 @@ int main(int argc, char* argv[]) {
 
     int move;
     for(;;) {
-	move = currPlayer->takeTurn();
+		move = currPlayer->takeTurn();
 
-	if(!Play::makeMove(baseState->getState(), move, baseState->getPlayerNum())) {
-	    cout << "Failed to play " << move << endl;
-	    return 1;
-	}
+		if(!Play::makeMove(baseState->getState(), move, baseState->getPlayerNum())) {
+			cerr << "Failed to play " << move << endl;
+			return 1;
+		}
 
-	//if(currPlayer->getPlayerType() == PlayerType::AI) {
-	    //cout << "The AI played in column " << move << "." << endl;
-	//}
+		//if(currPlayer->getPlayerType() == PlayerType::AI) {
+			//cerr << "The AI played in column " << move << "." << endl;
+		//}
 
-	if(Play::checkWin(baseState->getState(), baseState->getPlayerNum())) {
-	    if(currPlayer->getPlayerType() == PlayerType::AI) {
-		cout << "The AI (" << (int)currPlayer->getPlayerNum() << ") beat you!" << endl;
-	    } else {
-		cout << "You beat the AI!" << endl;
-	    }
+		if(Play::checkWin(baseState->getState(), baseState->getPlayerNum())) {
+			if(currPlayer->getPlayerType() == PlayerType::AI) {
+				cerr << "The AI (" << (int)currPlayer->getPlayerNum() << ") beat you!" << endl;
+			} else {
+				cerr << "You beat the AI!" << endl;
+			}
 
-	    ofstream res;
-	    res.open("tools/results.txt", ios::app);
-	    res << (int)currPlayer->getPlayerNum();
-	    res.close();
+			ofstream res;
+			res.open("tools/results.txt", ios::app);
+			res << (int)currPlayer->getPlayerNum();
+			res.close();
 
-	    break;
-	}
+			break;
+		}
 
-	if(Play::checkDraw(baseState->getState())) {
-	    cout << "It's a draw!" << endl;
+		if(Play::checkDraw(baseState->getState())) {
+			cerr << "It's a draw!" << endl;
 
-	    ofstream res;
-	    res.open("results.txt", ios::app);
-	    res << "0";
-	    res.close();
+			ofstream res;
+			res.open("results.txt", ios::app);
+			res << "0";
+			res.close();
 
-	    break;
-	}
+			break;
+		}
 
-	waitingPlayer->informEnemyTurn(move);
+		waitingPlayer->informEnemyTurn(move);
 
-	baseState->setPlayerNum(Play::flipTurn(baseState->getPlayerNum()));
-	temp = currPlayer;
-	currPlayer = waitingPlayer;
-	waitingPlayer = temp;
+		baseState->setPlayerNum(Play::flipTurn(baseState->getPlayerNum()));
+		temp = currPlayer;
+		currPlayer = waitingPlayer;
+		waitingPlayer = temp;
 
-	if(waitOnBots) {
-	    Utility::printState(baseState->getState());
-	    // Utility::waitForInput();
-	}
+		if(waitOnBots) {
+			Utility::printState(baseState->getState());
+		}
     }
 
-    Utility::printState(baseState->getState());
-
+    //Utility::printState(baseState->getState());
 
     return 0;
 }

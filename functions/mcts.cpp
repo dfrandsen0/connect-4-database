@@ -191,9 +191,9 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 //void printState(char** state) {
 //    for(int i = NUM_ROWS - 1; i >= 0; i--) {
 //        for(int j = 0; j < NUM_COLUMNS; j++) {
-//            cout << (int)state[j][i];
+//            cerr << (int)state[j][i];
 //        }
-//        cout << endl;
+//        cerr << endl;
 //    }
 //}
 

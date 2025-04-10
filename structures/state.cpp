@@ -27,6 +27,16 @@ State::State(char playerNum, char** state) {
     }
 }
 
+State::~State() {
+    delete[] this->available;
+
+    for(int i = 0; i < NUM_COLUMNS; i++) {
+	delete[] this->state[i];
+    }
+
+    delete[] this->state;
+}
+
 char State::getPlayerNum() {
     return this->playerNum;
 }

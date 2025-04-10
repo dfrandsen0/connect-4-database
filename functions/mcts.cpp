@@ -120,6 +120,7 @@ Node* MCTS::expand(State* parentState, int move, int playerNum) {
     return newNode;
 }
 
+// BUG off by one error somewhere here, overwrite by one (valgrind)
 bool MCTS::simulate(State* parentState, int move, int playerNum) {
     char** state = parentState->copyState();
 
@@ -149,6 +150,7 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 
     char turn = parentState->getPlayerNum();
 
+    bool result;
     for(;;) {
 	//make move
 	state[move][nextSpots[move]] = turn;
@@ -157,9 +159,11 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 	//check win
 	if(Play::checkWin(state, turn)) {
 	    if(turn == playerNum) {
-		return true;
+		result = true;
+		break;
 	    } else {
-		return false;
+		result = false;
+		break;
 	    }
 	}
 
@@ -167,7 +171,8 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 	if(nextSpots[move] == 6) {
 	    allSpots--;
 	    if(!allSpots) {
-		return false;
+		result = false;
+		break;
 	    }
 
 	    //patch?
@@ -186,6 +191,16 @@ bool MCTS::simulate(State* parentState, int move, int playerNum) {
 	//decide move
 	move = spots[(rand() % allSpots)];
     }
+
+
+    for(int i = 0; i < NUM_COLUMNS; i++) {
+	delete[] state[i];
+    }
+
+    delete[] state;
+    state = nullptr;
+
+    return result;
 }
 
 //void printState(char** state) {

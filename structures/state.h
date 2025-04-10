@@ -11,6 +11,8 @@ public:
     State(char playerNum);
     State(char playerNum, char** state);
 
+    ~State();
+
     char getPlayerNum();
     void setPlayerNum(int playerNum);
 

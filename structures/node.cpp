@@ -11,6 +11,14 @@ Node::Node(State* state) {
     }
 }
 
+Node::~Node() {
+    delete this->state;
+
+    for(int i = 0; i < NUM_CHILDREN; i++) {
+	delete this->children[i];
+    }
+}
+
 State* Node::getState() {
     return this->state;
 }

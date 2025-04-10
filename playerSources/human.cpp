@@ -6,6 +6,10 @@
 #include "state.h"
 #include "play.h"
 
+Human::~Human() {
+    delete this->internalState;
+}
+
 void Human::startGame() {
     this->internalState = Utility::makeEmptyState();
     this->internalState->setPlayerNum(this->playerNum_);

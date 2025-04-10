@@ -12,6 +12,10 @@
 
 using namespace std;
 
+AIBot::~AIBot() {
+    delete this->root;
+}
+
 void AIBot::startGame() {
     State* rootState = Utility::makeEmptyState();
     this->root = new Node(rootState);

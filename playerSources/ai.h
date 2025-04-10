@@ -13,6 +13,8 @@ public:
     AIBot(char playerNum) : Player(PlayerType::AI, playerNum) {}
     AIBot(char playerNum, double cValue, int numSims) : Player(PlayerType::AI, playerNum, cValue, numSims) {}
 
+    ~AIBot() override;
+
     void startGame() override;
     int takeTurn() override;
 private:

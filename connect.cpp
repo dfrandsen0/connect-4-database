@@ -104,6 +104,13 @@ int main(int argc, char* argv[]) {
 		}
     }
 
+    firstPlayer->endGame();
+    secondPlayer->endGame();
+
+    delete firstPlayer;
+    delete secondPlayer;
+    delete baseState;
+
     //Utility::printState(baseState->getState());
 
     return 0;

@@ -16,6 +16,8 @@ public:
     Node();
     Node(State* state);
 
+    ~Node();
+
     State* getState();
     void setState(State* state);
 

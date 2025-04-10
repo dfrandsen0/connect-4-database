@@ -6,6 +6,10 @@
 #include "state.h"
 #include "play.h"
 
+GuiPlayer::~GuiPlayer() {
+    delete this->internalState;
+}
+
 void GuiPlayer::startGame() {
     this->internalState = Utility::makeEmptyState();
     this->internalState->setPlayerNum(this->playerNum_);

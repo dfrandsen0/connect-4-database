@@ -47,12 +47,13 @@ int AIBot::findBestMove() {
 	if(available[i]) {
 	    cerr << kids[i]->getFinished() << ": ";
 	    double temp = Utility::calcUcb(kids[i], log(this->currPosition->getCount()), this->cValue);
-	    cerr << kids[i]->getCount() << ", " << kids[i]->getWins() << ": " << temp << endl;
+	    cerr << kids[i]->getCount() << ", " << kids[i]->getWins() << ": " << temp << "; " << (double)kids[i]->getWins() / (double)kids[i]->getCount() << endl;
 	} else {
 	    cerr << "unavailable" << endl;
 	}
     }
 */
+
     for(int i = 0; i < NUM_CHILDREN; i++) {
 	if(available[i]) {
 	    if(kids[i]->getFinished() == NodeFinished::WIN) {

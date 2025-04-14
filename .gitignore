@@ -2,3 +2,5 @@ connect
 connect.exe
 tools/*
 *.swp
+*__pycache__*
+.vscode/*

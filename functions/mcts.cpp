@@ -114,7 +114,7 @@ Node* MCTS::expand(State* parentState, int move, int playerNum) {
 		return newNode;
 	    }
 	}
-	newNode->setFinished(NodeFinished::LOSE);
+	newNode->setFinished(NodeFinished::DRAW);
     }
 
     return newNode;

@@ -1,7 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox
 
-import random, subprocess
+import subprocess
 
 ROWS = 6
 COLS = 7
@@ -53,7 +52,7 @@ class ConnectFour:
 
     def start_backend(self):
         self.backend = subprocess.Popen(
-            ['connect.exe', '0', '1.7', '50000'],
+            ['connect.exe', '0', '100', '1000000'],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             text=True
@@ -155,9 +154,4 @@ class ConnectFour:
         col = ord(col) - ord('0')
 
         if self.make_mark(col):
-            self.player_turn()       
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    game = ConnectFour(root)
-    root.mainloop()
+            self.player_turn()

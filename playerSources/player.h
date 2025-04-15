@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include "config.h"
+#include "serverConnect.h"
 
 class Player {
 protected:
@@ -9,9 +10,11 @@ protected:
     char playerNum_ = 1;
     double cValue = DEFAULT_C_VALUE;
     int numSims = DEFAULT_NUM_SIMS;
+    ServerConnect* sc;
 public:
     Player(enum PlayerType type, char playerNum) : playerType(type), playerNum_(playerNum) {}
     Player(enum PlayerType type, char playerNum, double cValue_, int numSims_) : playerType(type), playerNum_(playerNum), cValue(cValue_), numSims(numSims_) {}
+    Player(enum PlayerType type, char playerNum, double cValue_, int numSims_, ServerConnect* sc_) : playerType(type), playerNum_(playerNum), cValue(cValue_), numSims(numSims_), sc(sc_) {}
     virtual ~Player();
     virtual void startGame() = 0;
     virtual int takeTurn() = 0;

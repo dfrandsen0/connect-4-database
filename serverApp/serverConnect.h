@@ -1,20 +1,26 @@
 #ifndef SERVER_CONNECT_H_
 #define SERVER_CONNECT_H_
 
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <winsock2.h>
-#pragma comment(lib, "ws2_32.lib")
+#include <string>
+
+#include "node.h"
+
+using namespace std;
 
 class ServerConnect {
-private:
-    SOCKET sock;
 public:
     ServerConnect();
     ~ServerConnect();
-
+private:
+    SOCKET openSocket();
+    void sendPing(SOCKET sock);
+public:
     bool pullTree(Node* root);
     bool pushTree(Node* root);
-
+private:
+    void pushTreeHelper(stringstream& ss, Node* node);
+    void addNode(stringstream& ss, Node* node);
 };
 
 #endif

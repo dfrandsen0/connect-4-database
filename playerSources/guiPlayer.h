@@ -3,6 +3,7 @@
 
 #include "player.h"
 #include "state.h"
+#include "serverConnect.h"
 
 class GuiPlayer : public Player {
 private:
@@ -10,6 +11,7 @@ private:
 public:
     GuiPlayer(char playerNum) : Player(PlayerType::GUI, playerNum) {}
     GuiPlayer(char playerNum, double cValue, int numSims) : Player(PlayerType::GUI, playerNum, cValue, numSims) {}
+    GuiPlayer(char playerNum, double cValue, int numSims, ServerConnect* sc) : Player(PlayerType::GUI, playerNum, cValue, numSims, sc) {}
 
     ~GuiPlayer() override;
 

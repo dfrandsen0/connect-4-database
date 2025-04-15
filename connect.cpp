@@ -1,3 +1,5 @@
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include <iostream>
 #include <fstream>
 #include <math.h>
@@ -12,6 +14,9 @@
 #include "human.h"
 #include "ai.h"
 #include "guiPlayer.h"
+#include "serverConnect.h"
+
+#pragma comment(lib, "ws2_32.lib")
 
 using namespace std;
 
@@ -22,6 +27,8 @@ int main(int argc, char* argv[]) {
     );
     srand(seed);
 
+	ServerConnect* sc = new ServerConnect();
+
     Player* firstPlayer;
     Player* secondPlayer;
 
@@ -31,11 +38,11 @@ int main(int argc, char* argv[]) {
     }
 
     if(argc == 4) {
-		firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
+		firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]), sc);
 		secondPlayer = new GuiPlayer(2);
     } else if(argc == 6) {
-		firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]));
-		secondPlayer = new AIBot(2, atol(argv[4]), atoi(argv[5]));
+		firstPlayer = new AIBot(1, atol(argv[2]), atoi(argv[3]), sc);
+		secondPlayer = new AIBot(2, atol(argv[4]), atoi(argv[5]), sc);
     } else {
 		waitOnBots = false;
 		firstPlayer = new AIBot(1);
@@ -44,8 +51,6 @@ int main(int argc, char* argv[]) {
 
     firstPlayer->startGame();
     secondPlayer->startGame();
-
-    //[choose who goes first here]
 
     Player* currPlayer = firstPlayer;
     Player* waitingPlayer = secondPlayer;

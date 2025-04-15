@@ -13,6 +13,9 @@
 #define DEFAULT_C_VALUE		1.414213562
 #define DEFAULT_NUM_SIMS	1000
 
+// Server Values
+#define MAX_OBJECT_SIZE   1048576
+
 enum NodeFinished {
   UNFINISHED,
   WIN,

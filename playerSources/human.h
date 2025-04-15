@@ -3,6 +3,7 @@
 
 #include "player.h"
 #include "state.h"
+#include "serverConnect.h"
 
 class Human : public Player {
 private:
@@ -10,6 +11,7 @@ private:
 public:
     Human(char playerNum) : Player(PlayerType::HUMAN, playerNum) {}
     Human(char playerNum, double cValue, int numSims) : Player(PlayerType::HUMAN, playerNum, cValue, numSims) {}
+    Human(char playerNum, double cValue, int numSims, ServerConnect* sc) : Player(PlayerType::HUMAN, playerNum, cValue, numSims, sc) {}
 
     ~Human() override;
 

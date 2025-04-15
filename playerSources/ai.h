@@ -4,6 +4,7 @@
 #include "player.h"
 #include "node.h"
 #include "config.h"
+#include "serverConnect.h"
 
 class AIBot : public Player {
 private:
@@ -12,6 +13,7 @@ private:
 public:
     AIBot(char playerNum) : Player(PlayerType::AI, playerNum) {}
     AIBot(char playerNum, double cValue, int numSims) : Player(PlayerType::AI, playerNum, cValue, numSims) {}
+    AIBot(char playerNum, double cValue, int numSims, ServerConnect* sc) : Player(PlayerType::AI, playerNum, cValue, numSims, sc) {}
 
     ~AIBot() override;
 

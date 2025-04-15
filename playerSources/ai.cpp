@@ -9,6 +9,7 @@
 #include "play.h"
 #include "node.h"
 #include "mcts.h"
+#include "serverConnect.h"
 
 using namespace std;
 
@@ -18,7 +19,12 @@ AIBot::~AIBot() {
 
 void AIBot::startGame() {
     State* rootState = Utility::makeEmptyState();
-    this->root = new Node(rootState);
+
+	if(!(this->sc->pullTree(this->root))) {
+		this->root = new Node(rootState);
+	}
+	cerr << "checkpoint 4?" << endl;
+
     this->currPosition = this->root;
 }
 
@@ -108,6 +114,5 @@ void AIBot::informEnemyTurn(int move) {
 }
 
 void AIBot::endGame() {
-
+    this->sc->pushTree(this->root);
 }
-

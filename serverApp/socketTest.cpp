@@ -1,10 +1,7 @@
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <winsock2.h>
 #include <iostream>
 #include <algorithm>
-#include <string>
-
-#pragma comment(lib, "ws2_32.lib")  // Link with ws2_32.lib
+#include <string>   
 
 using namespace std;
 
@@ -40,7 +37,7 @@ int main() {
     }
 
     // Send a simple HTTP GET request
-    string headers = "POST / HTTP/1.1\r\nHost: example.com\r\nContent-Type: application/json\r\nContent-Length: ";
+    string headers = "POST / HTTP/1.1\r\nHost: example.com\r\nConnection: keep-alive\r\nContent-Type: application/json\r\nContent-Length: ";
 
     string body = "[]";
     

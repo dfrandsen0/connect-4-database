@@ -1,11 +1,13 @@
 import pymongo
 import time
 
+file_o = open("./serverApp/creds.txt", "r")
+user = file_o.readline().strip()
+password = file_o.readline().strip()
+cluster = file_o.readline().strip()
+dnsprefix = file_o.readline().strip()
+
 print("hello world!")
-user = "user"
-password = "steve"
-cluster = "cluster0"
-dnsprefix = "9heovzz"
 connectionUrl = f"mongodb+srv://{user}:{password}@{cluster}.{dnsprefix}.mongodb.net/"
 
 start = time.time()

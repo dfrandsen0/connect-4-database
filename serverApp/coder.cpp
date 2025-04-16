@@ -91,25 +91,28 @@ string Coder::base64_encode(string input) {
     }
 
     if (i) {
-        for (int j = i; j < 3; ++j)
+        for (int j = i; j < 3; ++j) {
             char_array_3[j] = 0;
+        }
 
         char_array_4[0] =  (char_array_3[0] & 0xfc) >> 2;
         char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
         char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
         char_array_4[3] =   char_array_3[2] & 0x3f;
 
-        for (int j = 0; j < i + 1; ++j)
+        for (int j = 0; j < i + 1; ++j) {
             output += base64_chars[char_array_4[j]];
-
-        while (i++ < 3)
-            output += '=';
+        }
     }
 
     return output;
 }
 
 string Coder::base64_decode(string encoded_string) {
+    while (encoded_string.size() % 4 != 0) {
+        encoded_string += '=';
+    }
+
     int in_len = encoded_string.size();
     int i = 0, j = 0, in_ = 0;
     unsigned char char_array_4[4], char_array_3[3];

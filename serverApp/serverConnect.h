@@ -16,11 +16,14 @@ private:
     SOCKET openSocket();
     void sendPing(SOCKET sock);
 public:
-    bool pullTree(Node* root);
+    Node* pullTree();
     bool pushTree(Node* root);
 private:
     void pushTreeHelper(stringstream& ss, Node* node);
     void addNode(stringstream& ss, Node* node);
+    int bufferToNodes(char* stream, Node** nodes);
+    void expandNode(Node* root, Node** nodeList, int nodeCount, char** reference);
+    bool compareStates(char** state1, char** state2);
 };
 
 #endif

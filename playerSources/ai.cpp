@@ -20,10 +20,9 @@ AIBot::~AIBot() {
 void AIBot::startGame() {
     State* rootState = Utility::makeEmptyState();
 
-	if(!(this->sc->pullTree(this->root))) {
+	if(this->sc->pullTree() == nullptr) {
 		this->root = new Node(rootState);
 	}
-	cerr << "checkpoint 4?" << endl;
 
     this->currPosition = this->root;
 }

@@ -8,6 +8,7 @@ public:
 
     // assumes a valid move given
     static bool makeMove(char** state, int move, char turn);
+    static bool unMakeMove(char** state, int move);
     static bool checkDraw(char** state);
 };
 

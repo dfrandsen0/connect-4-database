@@ -94,6 +94,22 @@ bool Play::makeMove(char** state, int move, char turn) {
     return false;
 }
 
+bool Play::unMakeMove(char** state, int move) {
+    if(state[move][0] == 0) {
+        return false;
+    }
+
+    for(int i = 1; i < NUM_ROWS; i++) {
+        if(state[move][i] == 0) {
+            state[move][i - 1] = 0;
+            break;
+        }
+    }
+
+    state[move][NUM_ROWS - 1] = 0;
+    return true;
+}
+
 bool Play::checkDraw(char** state) {
     for(int i = 0; i < NUM_COLUMNS; i++) {
 	if(state[i][NUM_ROWS - 1] == 0) {

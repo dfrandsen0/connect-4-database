@@ -14,6 +14,11 @@ class ConnectFour:
         self.ai_text = "AI is thinking..."
         self.player_text = "Your turn!"
 
+        self.server = subprocess.Popen(
+            ['python', '.\\serverApp\\flaskServer.py']
+        )
+        self.backend = None
+
         self.start()
 
     def start(self):
@@ -52,12 +57,12 @@ class ConnectFour:
 
     def start_backend(self):
         self.backend = subprocess.Popen(
-            ['connect.exe', '0', '100', '1000000'],
+            # ['connect.exe', '0', '100', '1000000'],
+            ['connect.exe', '0', '1', '1000'],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             text=True
         )
-        
 
     def quit_game(self):
         self.root.destroy()
@@ -109,6 +114,7 @@ class ConnectFour:
         self.quit_button.pack(pady=10)
 
         self.backend.wait()
+        self.backend = None
 
     def get_available_row(self, col):
         for row in reversed(range(ROWS)):
@@ -151,6 +157,7 @@ class ConnectFour:
         self.root.update()
 
         col = self.backend.stdout.read(1)
+
         col = ord(col) - ord('0')
 
         if self.make_mark(col):

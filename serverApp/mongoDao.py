@@ -1,5 +1,5 @@
 import pymongo
-from pymongo import UpdateOne, ReplaceOne
+from pymongo import ReplaceOne
 from collections import defaultdict
 
 class MongoDao:

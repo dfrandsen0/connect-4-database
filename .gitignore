@@ -1,6 +1,6 @@
 connect
 connect.exe
-tools/*
+tools/
 *.swp
 *__pycache__*
 .vscode/*

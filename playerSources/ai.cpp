@@ -20,7 +20,8 @@ AIBot::~AIBot() {
 void AIBot::startGame() {
     State* rootState = Utility::makeEmptyState();
 
-	if(this->sc->pullTree() == nullptr) {
+	this->root = this->sc->pullTree();
+	if(this->root == nullptr) {
 		this->root = new Node(rootState);
 	}
 
@@ -28,7 +29,7 @@ void AIBot::startGame() {
 }
 
 int AIBot::takeTurn() {
-//    cerr << "AI is thinking..." << endl;
+    // cerr << "AI is thinking..." << endl;
     MCTS::startSimulation(this->currPosition, this->numSims, this->cValue);
 
     int nextMove = findBestMove();
